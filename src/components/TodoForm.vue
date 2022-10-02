@@ -14,11 +14,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import TodoItemInterface from './../types/TodoItemInterface';
-import Status from './../enums/Status';
 import { mapActions } from 'pinia';
-import stores from './../stores';
-import {ADD_TODO} from './../stores/actions';
+import store from './../store';
+import { ADD_TODO } from './../store/actions';
+import Status from './../enums/Status';
 
 export default defineComponent({
   name: 'TodoForm',
@@ -26,17 +25,19 @@ export default defineComponent({
     description: '',
   }),
   methods: {
-    ...mapActions(stores, {
+    ...mapActions(store, {
       create: ADD_TODO,
     }),
     handleOnSubmit(): void {
       if (this.description === '') {
         return;
       }
-      const todo: TodoItemInterface = {
-        description: this.description, status: Status.OPEN,
-      };
-      this.create(todo);
+
+      this.create({
+        description: this.description,
+        status: Status.OPEN,
+      });
+
       this.description = '';
     },
   },
