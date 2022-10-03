@@ -51,7 +51,9 @@ export default defineComponent({
       update: UPDATE_TODO, delete: DELETE_TODO,
     }),
     handleOnClickDelete(): void {
-      // 
+      if (typeof this.$.vnode.key === 'string') {
+        this.delete(this.$.vnode.key);
+      }
     },
   },
 });
