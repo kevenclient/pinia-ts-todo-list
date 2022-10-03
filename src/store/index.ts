@@ -5,6 +5,7 @@ import { TODOS, CLOSED } from './getters';
 import TodoItemInterface from './../types/TodoItemInterface';
 import { v4 as uuidv4 } from 'uuid';
 import Status from './../enums/Status';
+import helper from './../helper';
 
 export default defineStore('todo', {
   state: () => ({
@@ -22,27 +23,11 @@ export default defineStore('todo', {
     },
   },
   getters: {
-    [TODOS](state): Array<TodoItemInterface> {
-      const todos = [] as Array<TodoItemInterface>;
-      for (const id in state.todos) {
-        if (state.todos[id].status === Status.CLOSED) {
-          continue;
-        }
-        const todo = {...state.todos[id], id};
-        todos.push(todo);
-      }
-      return todos;
+    [TODOS]({ todos }): TodoListInterface {
+      return helper.filter(todos, Status.OPEN);
     },
-    [CLOSED](state): Array<TodoItemInterface> {
-      const todos = [] as Array<TodoItemInterface>;
-      for (const id in state.todos) {
-        if (state.todos[id].status === Status.OPEN) {
-          continue;
-        }
-        const todo = {...state.todos[id], id};
-        todos.push(todo);
-      }
-      return todos;
+    [CLOSED]({ todos }): TodoListInterface {
+      return helper.filter(todos, Status.CLOSED);
     },
   },
 });

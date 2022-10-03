@@ -1,17 +1,17 @@
 <template>
   <ul class="list-group shadow">
-    <TodoItem v-for="item in todos"
-      :key="item.id" :item="item"/>
+    <TodoItem v-for="(item, id) in todos"
+      :key="id" :item="item"/>
   </ul>
-  <button v-if="closed.length" type="button"
+  <button v-if="completed" type="button"
     class="btn btn-link shadow-none my-3" data-bs-toggle="collapse"
     href="#collapseClosedTodos" aria-expanded="false">
-    {{ closed.length }} Completed items
+    {{ completed }} Completed items
   </button>
   <ul class="list-group shadow collapse"
     id="collapseClosedTodos">
-    <TodoItem v-for="item in closed"
-      :key="item.id" :item="item"/>
+    <TodoItem v-for="(item, id) in closed"
+      :key="id" :item="item"/>
   </ul>
 </template>
 
@@ -31,6 +31,9 @@ export default defineComponent({
     ...mapState(store, {
       todos: TODOS, closed: CLOSED,
     }),
+    completed(): number {
+      return Object.keys(this.closed).length;
+    },
   },
 });
 </script>
