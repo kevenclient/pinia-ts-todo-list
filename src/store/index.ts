@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import TodoListInterface from './../types/TodoListInterface';
-import { ADD_TODO, UPDATE_TODO, DELETE_TODO } from './actions';
+import { CREATE_TODO, UPDATE_TODO, DELETE_TODO } from './actions';
 import { TODOS, CLOSED } from './getters';
 import TodoItemInterface from './../types/TodoItemInterface';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +11,7 @@ export default defineStore('todo', {
     todos: {} as TodoListInterface,
   }),
   actions: {
-    [ADD_TODO](todo: TodoItemInterface): void {
+    [CREATE_TODO](todo: TodoItemInterface): void {
       this.todos[uuidv4()] = todo;
     },
     [UPDATE_TODO](id: string, status: Status): void {

@@ -16,7 +16,7 @@
 import { defineComponent } from 'vue';
 import { mapActions } from 'pinia';
 import store from './../store';
-import { ADD_TODO } from './../store/actions';
+import { CREATE_TODO } from './../store/actions';
 import Status from './../enums/Status';
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
   }),
   methods: {
     ...mapActions(store, {
-      create: ADD_TODO,
+      create: CREATE_TODO,
     }),
     handleOnSubmit(): void {
       if (this.description === '') {
