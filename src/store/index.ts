@@ -16,7 +16,9 @@ export default defineStore('todo', {
       this.todos[uuidv4()] = todo;
     },
     [UPDATE_TODO](id: string, status: Status): void {
-      this.todos[id].status = status;
+      const todo = this.todos[id];
+      this[DELETE_TODO](id);
+      this.todos[id] = {...todo, status};
     },
     [DELETE_TODO](id: string): void {
       delete this.todos[id];

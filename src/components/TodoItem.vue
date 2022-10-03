@@ -33,12 +33,11 @@ export default defineComponent({
         return this.item.status === Status.CLOSED;
       },
       set(value: boolean): void {
-        if (this.item === undefined) {
-          return;
-        }
         const status = value
           ? Status.CLOSED : Status.OPEN;
-        this.update(this.item.id ?? '', status);
+        if (typeof this.$.vnode.key === 'string') {
+          this.update(this.$.vnode.key, status);
+        }
       }
     },
     statusClass(): object {
@@ -52,7 +51,7 @@ export default defineComponent({
       update: UPDATE_TODO, delete: DELETE_TODO,
     }),
     handleOnClickDelete(): void {
-      this.delete(this.item?.id ?? '');
+      // 
     },
   },
 });
